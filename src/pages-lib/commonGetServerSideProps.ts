@@ -1,4 +1,4 @@
-import {NextPageContext, Redirect} from "next";
+import type {NextPageContext} from "next";
 import ReactQueryServerService from "@/src/app/prefetch/ReactQueryServerService";
 import requestAsyncLocalStorage, {IRequestAsyncLocalStorageContext} from "@/src/app/services/requestAsyncLocalStorage/requestAsyncLocalStorage";
 

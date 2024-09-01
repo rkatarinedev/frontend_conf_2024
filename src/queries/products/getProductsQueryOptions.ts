@@ -1,27 +1,23 @@
-import {createProductsQueryKey, ProductsQueryKey} from "./createProductsQueryKey";
+import {createProductsQueryKey} from "./createProductsQueryKey";
 import {
     ICatalogWebV1ServiceGetProductListParams,
-    ICatalogWebV1ServiceGetProductListResponse
 } from "./types";
 import {apiClient} from "@/src/app/services/axios/apiClient";
-import {FetchInfiniteQueryOptions, InfiniteData, QueryFunction} from "@tanstack/react-query";
+import {infiniteQueryOptions} from "@tanstack/react-query";
 
-type ProductInfiniteQueryOptions = FetchInfiniteQueryOptions<
-    ICatalogWebV1ServiceGetProductListResponse,
-    Error,
-    InfiniteData<ICatalogWebV1ServiceGetProductListResponse, number>,
-    ProductsQueryKey
->;
-
-export function getProductsQueryOptions(rawParams: ICatalogWebV1ServiceGetProductListParams): ProductInfiniteQueryOptions {
-
-    return {
-        queryKey: createProductsQueryKey(rawParams),
+export function getProductsQueryOptions(productBody: ICatalogWebV1ServiceGetProductListParams) {
+    return infiniteQueryOptions({
+        queryKey: createProductsQueryKey(productBody),
         queryFn: ({
                       queryKey: [
                           , , params
                       ]
                   }) => apiClient.catalog.catalogWebV1Swagger.catalogWebV1ServiceGetProductList(params),
-        initialPageParam: rawParams.page,
-    };
+        initialPageParam: productBody.page,
+        getNextPageParam: (lastPage) => {
+            const {meta} = lastPage;
+
+            return meta?.nextPage ?? undefined;
+        },
+    });
 }
