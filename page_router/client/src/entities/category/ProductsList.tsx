@@ -1,6 +1,7 @@
 import {Fragment} from "react";
 import type {useProductsInfiniteQuery} from "@/src/queries/products/useProductsInfiniteQuery";
 import {ProductCard} from "@/src/entities/product/card/ProductCard";
+import styles from "./ProductsList.module.css";
 
 
 type ProductsListProps = {
@@ -16,13 +17,11 @@ export const ProductsList = ({
     return <>
         <div>Category: {categoryPermalink}</div>
         <main>
-            <ul>
+            <ul className={styles.list}>
                 {data?.pages.map((page, i) => (
                     <Fragment key={i}>
                         {page.data?.map((product) => (
-                            <li key={product.id}>
-                                <ProductCard product={product}/>
-                            </li>
+                            <ProductCard key={product.id} product={product}/>
                         ))}
                     </Fragment>
                 ))}
