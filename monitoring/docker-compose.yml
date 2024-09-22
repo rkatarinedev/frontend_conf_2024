@@ -1,17 +1,28 @@
 version: "3"
 services:
   prometheus:
-    image: prom/prometheus:latest
+    image: ${PROMETHEUS_IMG}
     container_name: monitoring_prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alert_rules.yml:/etc/prometheus/alert_rules.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - '9090:9090'
 
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: monitoring_alertmanager
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+    ports:
+      - '9093:9093'
+
   grafana:
-    image: grafana/grafana:latest
+    image: ${GRAFANA_IMG}
     container_name: monitoring_grafana
     restart: unless-stopped
     links:
@@ -25,7 +36,7 @@ services:
 
   # Jaeger
   jaeger-all-in-one:
-    image: jaegertracing/all-in-one:latest
+    image: ${JAEGERTRACING_IMG}
     restart: always
     ports:
       - "16686:16686"

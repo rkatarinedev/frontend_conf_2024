@@ -7,7 +7,7 @@ const BASE_URL = __ENV.BASE_URL || 'http://localhost:4000';
 export let options = {
   stages: [
     { duration: '30s', target: 10 }, // Ramp-up to 10 users over 30 seconds
-    { duration: '1m', target: 10 },  // Stay at 10 users for 1 minute
+    { duration: '10m', target: 10 },  // Stay at 10 users for 1 minute
     { duration: '30s', target: 0 },  // Ramp-down to 0 users over 30 seconds
   ],
 };

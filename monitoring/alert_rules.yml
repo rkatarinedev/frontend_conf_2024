@@ -1,0 +1,19 @@
+groups:
+  - name: example_alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: 100 - (avg by (instance) (rate(next_process_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "CPU usage is high on {{ $labels.instance }}"
+          description: "CPU usage has been above 80% for more than 5 minutes on {{ $labels.instance }}."
+
+      - alert: Frontend_event_loop_lag
+        expr: next_nodejs_eventloop_lag_seconds > 0.2
+        for: 3m
+        labels:
+          severity: degradation
+        annotations:
+          description: "Frontend event loop lag > 200 ms for 3 min at {{ $labels.service }} pods"

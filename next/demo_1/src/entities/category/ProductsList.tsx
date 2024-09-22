@@ -16,7 +16,7 @@ export const ProductsList = ({
                              }: ProductsListProps) => {
     return <>
         <div>Category: {categoryPermalink}</div>
-        <main>
+        <main className={styles.root}>
             <ul className={styles.list}>
                 {data?.pages.map((page, i) => (
                     <Fragment key={i}>
@@ -26,7 +26,7 @@ export const ProductsList = ({
                     </Fragment>
                 ))}
             </ul>
-            <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
+            <button className={styles.loadMore} onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
                 {isFetchingNextPage ? 'Loading more...' : hasNextPage ? 'Load More' : 'Nothing more to load'}
             </button>
         </main>

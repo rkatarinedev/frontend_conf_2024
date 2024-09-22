@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import {register, collectDefaultMetrics} from "prom-client";
 
 collectDefaultMetrics({
-  prefix: 'next_',
+  prefix: `${process.env.NEXT_PUBLIC_APP_PREFIX}_`,
 })
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {

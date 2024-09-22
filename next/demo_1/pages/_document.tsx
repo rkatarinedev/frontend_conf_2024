@@ -1,9 +1,10 @@
-import { Html, Main, NextScript } from "next/document";
+import { Html, Main, Head, NextScript } from "next/document";
 import {DocumentHead} from "@/src/shared/DocumentHead";
 
 export default function Document() {
   return (
     <Html lang="en">
+      <Head/>
       <DocumentHead/>
       <body>
         <Main />
